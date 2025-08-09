@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparing Download - WinSoftHub</title>
+    <meta name="description" content="Preparing your download from WinSoftHub. Please wait...">
+    <meta name="author" content="WinSoftHub">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for Countdown Page */
+        :root {
+            --primary-cyan: #00f5ff;
+            --primary-purple: #8b5cf6;
+            --primary-pink: #ec4899;
+            --secondary-orange: #f97316;
+            --bg-dark: #0a0a0f;
+            --text-white: #ffffff;
+            --text-glow: rgba(0, 245, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-white);
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Animated Background */
+        .countdown-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center,
+                rgba(139, 92, 246, 0.3) 0%,
+                rgba(236, 72, 153, 0.2) 35%,
+                rgba(0, 245, 255, 0.1) 70%,
+                var(--bg-dark) 100%);
+            z-index: -2;
+        }
+
+        .countdown-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .countdown-particle {
+            position: absolute;
+            background: var(--primary-cyan);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: floatUp 8s infinite linear;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+                transform: scale(1);
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Countdown Container */
+        .countdown-container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .countdown-title {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 500;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 0;
+            animation: fadeInSlide 1s ease forwards;
+        }
+
+        .countdown-number {
+            font-size: clamp(8rem, 25vw, 20rem);
+            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, 
+                var(--primary-cyan) 0%, 
+                var(--primary-purple) 50%, 
+                var(--primary-pink) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 2s ease infinite, scaleCountdown 1s ease;
+            text-shadow: 0 0 50px var(--text-glow);
+            line-height: 0.8;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes scaleCountdown {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .countdown-message {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-weight: 400;
+            margin-top: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+            opacity: 0;
+            animation: fadeInSlide 1s ease 0.5s forwards;
+        }
+
+        /* Glow Effects */
+        .glow-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle,
+                rgba(0, 245, 255, 0.1) 0%,
+                rgba(139, 92, 246, 0.05) 50%,
+                transparent 100%);
+            animation: pulse 3s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.1;
+            }
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .countdown-container {
+                padding: 0 1rem;
+            }
+            
+            .countdown-title {
+                margin-bottom: 1.5rem;
+            }
+            
+            .countdown-message {
+                margin-top: 1.5rem;
+            }
+            
+            .glow-circle {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="countdown-background"></div>
+    <div class="countdown-particles" id="particlesContainer"></div>
+    <div class="glow-circle"></div>
+    
+    <!-- Main Content -->
+    <div class="countdown-container">
+        <h2 class="countdown-title">Preparing your download...</h2>
+        <div class="countdown-number" id="countdownNumber">3</div>
+        <p class="countdown-message">Redirecting to WinSoftHub</p>
+    </div>
+
+    <script>
+        /**
+         * Countdown and Redirect Script
+         * Lightweight and optimized for fast loading
+         */
+        
+        // Initialize countdown
+        let countdown = 3;
+        const countdownElement = document.getElementById('countdownNumber');
+        
+        // Create floating particles
+        function createCountdownParticles() {
+            const container = document.getElementById('particlesContainer');
+            const colors = ['#00f5ff', '#8b5cf6', '#ec4899', '#f97316'];
+            
+            // Create fewer particles for performance
+            const particleCount = window.innerWidth > 768 ? 20 : 10;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'countdown-particle';
+                
+                // Random properties
+                const size = Math.random() * 4 + 2; // 2-6px
+                const startX = Math.random() * window.innerWidth;
+                const duration = Math.random() * 5 + 6; // 6-11s
+                const delay = Math.random() * 3; // 0-3s delay
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Apply styles
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = startX + 'px';
+                particle.style.background = color;
+                particle.style.animationDuration = duration + 's';
+                particle.style.animationDelay = delay + 's';
+                
+                container.appendChild(particle);
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, (duration + delay) * 1000);
+            }
+        }
+        
+        // Start countdown when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create particles
+            createCountdownParticles();
+            
+            // Start countdown timer
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                
+                if (countdown > 0) {
+                    // Update number with animation reset
+                    countdownElement.style.animation = 'none';
+                    countdownElement.offsetHeight; // Trigger reflow
+                    countdownElement.style.animation = 'gradientShift 2s ease infinite, scaleCountdown 1s ease';
+                    countdownElement.textContent = countdown;
+                } else {
+                    // Clear interval and redirect
+                    clearInterval(countdownInterval);
+                    
+                    // Show "GO!" briefly before redirect
+                    countdownElement.textContent = 'GO!';
+                    countdownElement.style.color = '#00f5ff';
+                    countdownElement.style.transform = 'scale(1.2)';
+                    
+                    // Redirect after brief delay
+                    setTimeout(() => {
+                        window.location.href = 'https://winsofthub.com/dld/';
+                    }, 500);
+                }
+            }, 1000);
+            
+            // Fallback redirect in case JavaScript fails
+            setTimeout(() => {
+                window.location.href = 'https://winsofthub.com/dld/';
+            }, 4500);
+        });
+        
+        // Performance optimization: reduce particles on low-end devices
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+            // Skip some visual effects on low-end devices
+            document.querySelector('.glow-circle').style.display = 'none';
+        }
+        
+        // Preload the target URL for faster redirect
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = 'https://winsofthub.com/dld/';
+        document.head.appendChild(link);
+    </script>
+</body>
+</html>
